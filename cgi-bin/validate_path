@@ -1,0 +1,17 @@
+#!/usr/bin/python
+
+import cgi
+import pysvn
+import json
+
+form = cgi.FieldStorage()
+path = form['path'].value
+
+client = pysvn.Client()
+
+print 'Content-type: application/json\n'
+try:
+	client.ls(path)
+	print json.dumps({'valid':True})
+except pysvn.ClientError:
+	print json.dumps({'valid':False})

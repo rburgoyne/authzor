@@ -1,0 +1,25 @@
+#!/usr/bin/python
+
+import pysvn
+import cgi
+import json
+import os.path
+
+def main():
+    form = cgi.FieldStorage()
+    path = form['path'].value
+
+    client = pysvn.Client()
+    contents = client.ls(path)
+
+    print 'Content-type: application/json\n'
+    contents_list = []
+    for entry in contents:
+	    is_dir = entry['kind'] == pysvn.node_kind.dir
+	    if (is_dir):
+		    list_entry = {'data':os.path.basename(entry['name']), 'state':'closed', 'children':'', 'metadata':{'full_path':entry['name']}}
+		    contents_list.append(list_entry)
+    print json.dumps(contents_list)
+	
+if __name__ == '__main__':
+	main()	
