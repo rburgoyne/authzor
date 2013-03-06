@@ -39,6 +39,7 @@ sudo a2enmod authnz_ldap
 sudo service apache2 restart
 
 The page will now be available at http://[hostname]/authzor
+Make sure that your authz file is writable by the web user.
 
 
 Version history:
