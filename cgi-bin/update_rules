@@ -1,0 +1,149 @@
+#!/usr/bin/python
+
+import sys
+import ConfigParser
+import json
+import ldap
+
+config_location = '/var/www/authzor/authzor.conf'
+
+# name_type constants
+ALL = 'all'
+USER = 'user'
+GROUP = 'group'
+
+# permissions constants
+R = 'r'
+RW = 'rw'
+
+groups_section_name = 'groups'
+
+def main():
+    print 'Content-type: application/json\n'
+    
+    # Get configuration values
+    try:
+        config_file = open(config_location)
+    except IOError:
+        print_error('Could not open the configuration file.')
+        raise
+    try:
+        settings = json.loads(config_file.read())
+    except ValueError:
+        print_error('Could not parse the configuration file.')
+        raise
+    
+    parser = ConfigParser.RawConfigParser()
+    # Dont' convert strings to lower case
+    parser.optionxform = str
+    
+    # Read the configuration from STDIN, parse it, and write it to file
+    data = sys.stdin.read()
+    
+    if data != '':
+        # Import group definitions from LDAP
+        if not parser.has_section(groups_section_name):
+            parser.add_section(groups_section_name)
+        groups = None
+        
+        try:
+            connection = ldap.initialize(str(settings['ldap_server_url']))
+            connection.simple_bind_s
+            groups = connection.search_s( str(settings['groups_prefix']) + "," + str(settings['base_dn']),
+                                      ldap.SCOPE_SUBTREE, str(settings['groups_filter']),
+                                      [str(settings['groups_name_attr']), str(settings['group_member_name_attr'])])        
+            svngroups_query_result = connection.search_s( str(settings['svngroups_dn']),
+                                      ldap.SCOPE_BASE, attrlist=[str(settings['group_member_attr'])] )
+            svngroups_entries = ldap.cidict.cidict(svngroups_query_result[0][1])
+            for group in groups:
+                group_entries = ldap.cidict.cidict(group[1])
+                if group[0] in svngroups_entries[settings['group_member_attr']]:
+                    parser.set(groups_section_name, group_entries[settings['groups_name_attr']][0], ','.join(group_entries[settings['group_member_name_attr']]))
+        except ldap.LDAPError as e:
+            if type(e.message) == dict and e.message.has_key('desc'):
+                error = e.message['desc']
+            else:
+	            error = str(e)
+            print_error(error)
+            raise
+            
+        # Record the new rules
+        try:
+            rules = json.loads(data)
+        except ValueError:
+            print_error('Could not parse rules data.')
+            raise
+        
+        for rule in rules:
+            if rule['repo'] == '/':
+                full_path = rule['repo']
+            elif rule['path'] == '':
+                full_path = rule['repo'] + ":" + '/'
+            else:
+                full_path = rule['repo'] + ":" + rule['path']
+            if not parser.has_section(full_path):
+                parser.add_section(full_path)
+            
+            name = ''
+            if rule['name_type'] == ALL:
+                name = '*'
+            elif rule['name_type'] == GROUP:
+                name = '@' + rule['name']
+            else:
+                name = rule['name']
+            
+            permissions = ''
+            if rule['permissions'] == R:
+                permissions = 'r'
+            elif rule['permissions'] == RW:
+                permissions = 'rw'
+                
+            parser.set(full_path, name, permissions)       
+        
+        try:
+            parser.write(open(settings['authz_file'], 'w'))        
+        except IOError:
+            print_error('Could not open authz file.')
+            raise
+	
+	# Read the configuration from file, parse it, and write it to STDOUT
+    rules = []
+    try:
+        parser.read(settings['authz_file'])
+    except IOError:
+        print_error('Could not open authz file.')
+        raise
+    except ConfigParser.Error:
+        print_error('Could not parse authz file.')
+        raise
+    for section in parser.sections():
+        if section != 'groups':
+            for item in parser.items(section):
+                rule = {}
+                split_path = section.partition(':')
+                rule['repo'] = split_path[0]
+                rule['path'] = split_path[2]
+                name = item[0]
+                permissions = item[1]
+                if name == '*':
+                    rule['name_type'] = ALL
+                elif (name[0] == '@') or (name[0] == '~' and name[1] == '@'):
+                    rule['name_type'] = GROUP
+                else:
+                    rule['name_type'] = USER
+                rule['name'] = name.lstrip('~').lstrip('@*')
+                if permissions == 'r':
+                    rule['permissions'] = R
+                elif permissions == 'rw':
+                    rule['permissions'] = RW
+                else:
+                    rule['permissions'] = None
+                rules.append(rule)
+    
+    print json.dumps(rules)
+    
+def print_error(error):
+    print json.dumps({'error':error})
+		
+if __name__ == '__main__':
+	main()	

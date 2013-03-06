@@ -1,0 +1,92 @@
+#!/usr/bin/python
+
+""" 
+get_options: Prints a dictionary containing a list of users and a list of 
+groups (which are themselves members of the 'svngroups' group, obtained from 
+LDAP. 
+"""
+
+import ldap
+import json
+import cgi
+
+config_location = '/var/www/authzor/authzor.conf'
+
+# LDAP returns our search query in a complex format. This function parses out
+# the attribute we care about.
+def get_name(entry, attribute):
+    # entry is a tuple that contains the users dn and a dictionary of attributes
+    attributes = ldap.cidict.cidict(entry[1]) # This is a case-insensitive dictionary
+    try:
+        names = attributes[attribute] # This is a list of values for the 
+                                      # attribute
+    except KeyError:
+        print_error('The attribute ' + attribute + ' does not exist.')
+        raise
+    name = names[0]
+    return name
+
+def get_names(entries, attribute):
+    """Take the LDAP output and returns a list of names."""
+    names = []
+    for entry in entries:
+        names.append(get_name(entry, attribute))
+    return names  
+
+def main():
+    print "Content-type: application/json\n"
+    
+    # Get configuration values
+    try:
+        config_file = open(config_location)
+    except IOError:
+        print_error('Could not open the configuration file.')
+        raise
+    try:
+        settings = json.loads(config_file.read())
+    except ValueError:
+        print_error('Could not parse the configuration file.')
+        raise
+
+    # Connect to LDAP to get a list of users and groups
+    users = None
+    groups = None
+    svngroups = []
+
+    try:
+        connection = ldap.initialize(str(settings['ldap_server_url']))
+        connection.simple_bind_s
+        
+        users = connection.search_s( str(settings['users_prefix']) + "," + str(settings['base_dn']), ldap.SCOPE_SUBTREE,
+                                     str(settings['users_filter']), [str(settings['users_name_attr'])])
+        groups = connection.search_s( str(settings['groups_prefix']) + "," + str(settings['base_dn']),
+                                      ldap.SCOPE_SUBTREE, str(settings['groups_filter']),
+                                      [str(settings['groups_name_attr'])] )
+        svngroups_query_result = connection.search_s( str(settings['svngroups_dn']),
+                                      ldap.SCOPE_BASE, attrlist=[str(settings['group_member_attr'])] )
+        svngroups_entries = ldap.cidict.cidict(svngroups_query_result[0][1])
+        for group in groups:
+            if group[0] in svngroups_entries[settings['group_member_attr']]:
+                svngroups.append(group) 
+    except ldap.LDAPError as e:
+        if type(e.message) == dict and e.message.has_key('desc'):
+            error = e.message['desc']
+        else:
+	        error = str(e)
+        print_error(error)
+        raise
+
+    user_names = get_names(users, settings['users_name_attr'])
+    user_names.sort()
+
+    group_names = get_names(svngroups, settings['groups_name_attr'])
+    group_names.sort()
+    
+    options = { 'users': user_names, 'groups': group_names, 'error':None}
+    print json.dumps(options)
+    
+def print_error(error):
+    print json.dumps({'error':error})
+  
+if __name__ == "__main__":
+    main()

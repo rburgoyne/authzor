@@ -1,0 +1,24 @@
+#!/usr/bin/python
+
+import json
+import sys
+
+config_location = '/var/www/authzor/authzor.conf'
+
+def main():
+    print 'Content-type: application/json\n'
+    try:
+        data = sys.stdin.read()
+        if data != '':
+            config_file = open(config_location, 'w')
+            config_file.write(data)
+            config_file.close()
+        
+        config_file = open(config_location)
+        data = config_file.read()
+        print data
+    except IOError:
+        print '{"error":"Could not open the configuration file."}'
+
+if __name__ == '__main__':
+	main()
