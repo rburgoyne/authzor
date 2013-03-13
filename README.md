@@ -55,9 +55,9 @@ At the top left corner of the rules table in the Authzor interface, click the "S
 | ------------------------ | ------------------------ | ------------------ |
 | SVN root directory       | /srv/svn                 |  Where are your Subversion repositories located? |
 | Authorization file       | /srv/svn/authz           | Where is your authz permission file? |
-| LDAP server URL:         | ldap://ldap.example.com  | URL of the LDAP server from which to pull user and group information |
-| Base DN:                 | dc=example,dc=com        | The LDAP base DN from which to start searching for users and groups |
-| Users prefix:            | ou=people                | Prefix for LDAP subtree containing users |
+| LDAP server URL          | ldap://ldap.example.com  | URL of the LDAP server from which to pull user and group information |
+| Base DN                  | dc=example,dc=com        | The LDAP base DN from which to start searching for users and groups |
+| Users prefix             | ou=people                | Prefix for LDAP subtree containing users |
 |Users filter              | objectclass=posixaccount | Only show users that match the filter
 | Users name attribute:    | uid                      | The LDAP attribute to use for usernames |
 | Groups prefix            | ou=group                 | Prefix for LDAP subtree containing groups |
