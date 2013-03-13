@@ -8,6 +8,12 @@ Authzor is a web interface for managing user-specific authorization for Subversi
 
 ![Sample screenshot](screenshot.png)
 
+## Features ##
+
+  * Create, edit, and delete Subversion authorization rules using a simple web-based interface.
+  * Copy rules from one user or group to another or from one location to another. This lets you create a new user and easily say "give her permissions like Sarah" or create a new repository and say "let all the people who can access our production repository access this one too."
+  * Group definitions and usernames are imported from an LDAP database.
+
 ## Installation ##
 
 Install prerequisites apache2, git, python-ldap:
