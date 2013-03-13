@@ -64,8 +64,11 @@ At the top left corner of the rules table in the Authzor interface, click the "S
 | Groups filter            | objectclass=posixgroup   | Only show groups that match the filter |
 | Groups name attribute    | cn                       | The LDAP attribute to use for group name |
 | Group of SVN groups DN   | cn=svngroups,ou=group,dc=example,dc=com | The DN of the group which contains all other SVN groups. This is used so that not every LDAP group is listed in Authzor |
-| Group member attribute   | member                   | Which attribute of a group contains the DN of its members |
-| Group member name attribute | memberuid             | Which attribute of a group contains the uid of its members |  
+| Group member attribute   | member                   | Which attribute of a group contains the DN of its members? |
+| Group member name attribute | memberuid             | Which attribute of a group contains the uid of its members? |  
 
-2012-10-18 v0.5b
+## Change Log ##
+
+### 2012-10-18 v0.5b ###
+
 This is the initial release. All features are included, but error handling is not complete.
