@@ -5,6 +5,8 @@ SVN authorization file management utility
 Ryan Burgoyne
 GECO, Inc.
 
+![Sample screenshot](screenshot.png)
+
 ## Installation ##
 
 Install prerequisites apache2, git, python-ldap:
