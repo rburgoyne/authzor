@@ -27,11 +27,11 @@ $(document).ready(function() {
 	updateRules();
 	updateSettings();
 	$('#browse-list').hide();
-	
+
 	// Add change event for user/group radio buttons to populate the dropdown
 	// appropriately
 	$("#rule-form input[name=user-group]").change(updateUsersGroups);	
-	
+
 	$("#rule-form select[name=repos]").change(repoChanged);
     
     $('#ok-button').click(function(event) {
@@ -685,7 +685,8 @@ function showRules() {
         // Create the header row
         section_body.append('<tr class="header-row">' +
             '<td><input type="checkbox" class="select-all-checkbox" /></td>' +
-            '<td class="fill-column">' + section['name'] + '</td>' +
+            '<td class="fill-column">' + section['name'] + 
+                '<a class="new-link">New</a>' + '</td>' +
             '<td class="checkbox-column">Read</td><td class="checkbox-column">Write</td>' +
             '</tr>'
         );
