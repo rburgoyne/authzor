@@ -78,5 +78,3 @@ At the top left corner of the rules table in the Authzor interface, click the "S
 ### 2012-10-18 v0.5b ###
 
 This is the initial release. All features are included, but error handling is not complete.
-
-Changed the readme
