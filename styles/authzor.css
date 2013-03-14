@@ -238,3 +238,7 @@ td.checkbox-column {
     display:none;
 }
     
+.new-link {
+    margin-left:1em;
+    font-size:10pt;
+}
