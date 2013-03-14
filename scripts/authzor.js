@@ -143,12 +143,6 @@ $(document).ready(function() {
  		editSettings();
  		updateSettings();
  	});
-
-    $('.new-link').hide();
-
-    $('.header-row').hover( function() {
-        $(this).find('.new-link').show();
-    });
 });
 
 function repoChanged() {
@@ -790,6 +784,12 @@ function showRules() {
             
             refreshButtons();
         });
+
+    $('.new-link').hide();
+
+    $('.header-row').hover( function() {
+        $(this).find('.new-link').show();
+    });
         
     // Processing complete, show rules section.
     
