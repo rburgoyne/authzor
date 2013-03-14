@@ -689,8 +689,8 @@ function showRules() {
         // Create the header row
         section_body.append('<tr class="header-row">' +
             '<td><input type="checkbox" class="select-all-checkbox" /></td>' +
-            '<td class="fill-column">' + section['name'] + 
-                '<a class="new-link">New</a>' + '</td>' +
+            '<td class="fill-column"><span>' + section['name'] + 
+                '</span><a class="new-link">New</a>' + '</td>' +
             '<td class="checkbox-column">Read</td><td class="checkbox-column">Write</td>' +
             '</tr>'
         );
