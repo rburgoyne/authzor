@@ -787,9 +787,14 @@ function showRules() {
 
     $('.new-link').hide();
 
-    $('.header-row').hover( function() {
-        $(this).find('.new-link').show();
-    });
+    $('.header-row').hover(
+        function() {
+            $(this).find('.new-link').show();
+        },
+        function() {
+            $(this).find('.new-link').hide();
+        }
+    );
         
     // Processing complete, show rules section.
     
