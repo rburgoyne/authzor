@@ -790,7 +790,7 @@ function showRules() {
         });
 
     $('.new-link').hide().click( function() {
-        var path = $(this).prev().split(':');
+        var path = $(this).prev().text().split(':');
         $('#repos-dropdown').val(path[0]);
         $('#path-input').val(path[1]);
         showNewRuleForm()
