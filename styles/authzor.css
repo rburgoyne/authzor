@@ -145,12 +145,13 @@ div.input-group > div.edit-multiple {
     font-size: 8pt;
 }
 
-#footer a {
+a {
 	color:#17a54e;
 	text-decoration:none;
+    cursor:pointer;
 }
 
-#footer a:hover {
+a:hover {
 	border-bottom:1px dotted #17a54e;
 }
 
