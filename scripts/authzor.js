@@ -143,6 +143,12 @@ $(document).ready(function() {
  		editSettings();
  		updateSettings();
  	});
+
+    $('.new-link').hide();
+
+    $('.header-row').hover( function() {
+        $(this).find('.new-link').show();
+    }
 });
 
 function repoChanged() {
