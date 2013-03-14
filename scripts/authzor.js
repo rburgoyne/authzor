@@ -148,7 +148,7 @@ $(document).ready(function() {
 
     $('.header-row').hover( function() {
         $(this).find('.new-link').show();
-    }
+    });
 });
 
 function repoChanged() {
