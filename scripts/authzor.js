@@ -74,10 +74,7 @@ $(document).ready(function() {
 	});
 	
 	$('#new-button').click(function() {
-	    $('div.input-group > :checkbox').hide();
-	    $('div.input-group > div').removeClass('edit-multiple');
-	    $('#ok-button').val('Add Rule');
-	    showModal($('#rule-form'));	    
+	    showNewRuleForm();	    
 	});
 	
 	$('#cancel-button').click(function() {
@@ -144,6 +141,13 @@ $(document).ready(function() {
  		updateSettings();
  	});
 });
+
+function showNewRuleForm () {
+    $('div.input-group > :checkbox').hide();
+    $('div.input-group > div').removeClass('edit-multiple');
+    $('#ok-button').val('Add Rule');
+    showModal($('#rule-form'));
+}
 
 function repoChanged() {
 	updatePathInputs();
@@ -785,7 +789,12 @@ function showRules() {
             refreshButtons();
         });
 
-    $('.new-link').hide();
+    $('.new-link').hide().click( function() {
+        var path = $(this).previous().split(':');
+        $('#repos-dropdown').val(path[0]);
+        $('#path-input').val(path[1]);
+        showNewRuleForm()
+    });
 
     $('.header-row').hover(
         function() {
