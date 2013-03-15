@@ -836,16 +836,10 @@ function showRules() {
     );
         
     // Processing complete, show rules section.
-    
     $('#rules-section').show().animate({
-        opacity:1
-    }, 'slow');
-
-    if (scroll_here) {
-        $('#rules-section').animate({
-            scrollTop: scroll_here.offset().top + 'px'
-        }, 'fast');
-    }
+        opacity:1,
+        scrollTop: (scroll_here) ? scroll_here.offset().top + 'px' : 0,
+    }, 'slow');    
 }
     
 function refreshButtons() {
