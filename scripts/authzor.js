@@ -836,7 +836,11 @@ function showRules() {
     );
         
     // Processing complete, show rules section.
-    $('#rules-section').show().animate({opacity:1}, 'slow')[0].scrollIntoView(true);
+    $('#rules-section').show().animate({opacity:1}, 'slow');
+
+    if (scroll_here) {
+        scroll_here[0].scrollIntoView(true);
+    }
 }
     
 function refreshButtons() {
