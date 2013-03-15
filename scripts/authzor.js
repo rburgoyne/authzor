@@ -836,6 +836,7 @@ function showRules() {
     );
         
     // Processing complete, show rules section.
+    if (scroll_here) alert(scroll_here.offset().top);
     $('#rules-section').show().animate({
         opacity:1,
         scrollTop: (scroll_here) ? scroll_here.offset().top + 'px' : 0,
