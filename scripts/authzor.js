@@ -632,6 +632,7 @@ function compareAddDeleteStatus(rule_a, rule_b) {
 }
 
 function showRules() {
+    var scroll_here;
     // Hide the rules section while processing completes
     $('#rules-section').hide().css({opacity: 0});
     
@@ -753,13 +754,20 @@ function showRules() {
             	checkbox_icon = '<input type="checkbox" />';
             }
             
-            section_body.append('<tr class=' + rule_class + '>' + 
+            var table_row = $('<tr class=' + rule_class + '>' + 
                 '<td>' + checkbox_icon + '</td>' +
                 '<td class="fill-column">' + rule_name + '</td>' +
                 '<td class="checkbox-column">' + read_checkbox + '</td>' +
                 '<td class="checkbox-column">' + write_checkbox + '</td>' +
                 '</tr>'
             );
+            
+            // Scroll to the newest changed rule after showing rules
+            if ((rule['added'] || rule['deleted']) && !scroll_here) {
+                scroll_here = table_row;
+            }
+
+            section_body.append(table_row)
         });     
                
         $('#rules-table').append(section_body);
@@ -829,7 +837,10 @@ function showRules() {
         
     // Processing complete, show rules section.
     
-    $('#rules-section').show().animate({opacity:1}, 'slow');
+    $('#rules-section').show().animate({
+        opacity:1,
+        scrollTop: scroll_here.offset().top + 'px'
+    }, 'slow');
 }
     
 function refreshButtons() {
