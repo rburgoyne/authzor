@@ -838,9 +838,13 @@ function showRules() {
     // Processing complete, show rules section.
     
     $('#rules-section').show().animate({
-        opacity:1,
-        scrollTop: scroll_here.offset().top + 'px'
+        opacity:1
     }, 'slow');
+
+    if (scroll_here) {
+        $('#rules-section').animate({
+        scrollTop: scroll_here.offset().top + 'px'
+    }, 'fast');
 }
     
 function refreshButtons() {
