@@ -801,14 +801,12 @@ function showRules() {
 
     $('.new-link').hide().click( function() {
         var header_row = $(this).closest('tr');
-        if ($('#arrrange-by-path-radio-button').is(':checked')) {
+        if ($('#arrange-by-path-radio-button').is(':checked')) {
             $('#repos-dropdown').val(header_row.data('repo'));
             $('#path-input').val(header_row.data('path'));
             repoChanged();
         }
         else {
-            $('#repos-dropdown').val(header_row.data('repo'));
-            $('#path-input').val(header_row.data('path'));
             $('#all-radio-button').prop('checked', 'checked'); // By default, pick "All"
             $('#user-radio-button').prop('checked', 
                 (header_row.data('name_type') == USER));
