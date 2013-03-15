@@ -843,8 +843,9 @@ function showRules() {
 
     if (scroll_here) {
         $('#rules-section').animate({
-        scrollTop: scroll_here.offset().top + 'px'
-    }, 'fast');
+            scrollTop: scroll_here.offset().top + 'px'
+        }, 'fast');
+    }
 }
     
 function refreshButtons() {
