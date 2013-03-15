@@ -183,7 +183,7 @@ function loadBrowseList() {
     .bind("select_node.jstree", function (event, data) {
     	var rel_path = data.rslt.obj.data('full_path').replace('file://' + settings['svn_root_dir'] + '/', '')
     	rel_path = rel_path.substring(rel_path.indexOf('/'), rel_path.length);
-    	$('#path-input').val(rel_path);
+    	$('#path-input').val(rel_path).change();
     });
 }
     
