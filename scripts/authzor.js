@@ -793,7 +793,8 @@ function showRules() {
         var path = $(this).prev().text().split(':');
         $('#repos-dropdown').val(path[0]);
         $('#path-input').val(path[1]);
-        showNewRuleForm()
+        repoChanged();
+        showNewRuleForm();
     });
 
     $('.header-row').hover(
