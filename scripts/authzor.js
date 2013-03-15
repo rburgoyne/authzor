@@ -687,13 +687,23 @@ function showRules() {
         // Create a tbody
         var section_body = $('<tbody></tbody>');
         // Create the header row
-        section_body.append('<tr class="header-row">' +
+        var header_row = $('<tr class="header-row">' +
             '<td><input type="checkbox" class="select-all-checkbox" /></td>' +
             '<td class="fill-column"><span>' + section['name'] + 
                 '</span><a class="new-link">New</a>' + '</td>' +
             '<td class="checkbox-column">Read</td><td class="checkbox-column">Write</td>' +
-            '</tr>'
-        );
+            '</tr>');
+
+        // Store data about the section with the header row (for use by "new" links)
+        if ($('#arrange-by-path-radio-button').is(':checked')) {
+		  	header_row.data('repo', section['rules'][0]['repo']);
+            header_row.data('path', section['rules'][0]['path']);
+		}
+		else {
+		    header_row.data('name_type', section['rules'][0]['name_type']);
+		    header_row.data('name', section['rules'][0]['name']);
+		}
+        section_body.append(header_row);
         
         // Create a row for each rule
         $.each(section['rules'], function(index, rule) {
@@ -790,10 +800,23 @@ function showRules() {
         });
 
     $('.new-link').hide().click( function() {
-        var path = $(this).prev().text().split(':');
-        $('#repos-dropdown').val(path[0]);
-        $('#path-input').val(path[1]);
-        repoChanged();
+        var header_row = $(this).closest('tr');
+        if ($('#arrrange-by-path-radio-button').is(':checked')) {
+            $('#repos-dropdown').val(header_row.data('repo'));
+            $('#path-input').val(header_row.data('path'));
+            repoChanged();
+        }
+        else {
+            $('#repos-dropdown').val(header_row.data('repo'));
+            $('#path-input').val(header_row.data('path'));
+            $('#all-radio-button').prop('checked', 'checked'); // By default, pick "All"
+            $('#user-radio-button').prop('checked', 
+                (header_row.data('name_type') == USER));
+            $('#group-radio-button').prop('checked', 
+                (header_row.data('name_type') == GROUP));
+            updateUsersGroups();
+            $('#users-groups-dropdown').val(header_row.data('name'));
+        }
         showNewRuleForm();
     });
 
