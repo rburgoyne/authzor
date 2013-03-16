@@ -86,18 +86,6 @@ div.input-group > div.edit-multiple {
 	float:right;
 }
 
-#title-bar {
-    background-color:#505050;
-    box-shadow: 0 1px 5px #17a54e;
-    height:75px;
-    min-width: 300px;
-    position:absolute;
-    left:0;
-    right:0;
-    z-index:3;
-    display:none;
-}
-
 #settings-button {
 	float:right;
 }
@@ -111,6 +99,11 @@ div.input-group > div.edit-multiple {
     right:0;
     background-color:#3D3D3D;
     color:#fff;
+    box-shadow: 0 0 8px #000;
+}
+
+#title {
+    margin-right:1em;
 }
 
 .selection-only-button {
