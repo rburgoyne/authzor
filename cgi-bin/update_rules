@@ -58,7 +58,7 @@ def main():
             for group in groups:
                 group_entries = ldap.cidict.cidict(group[1])
                 if group[0] in svngroups_entries[settings['group_member_attr']]:
-                    parser.set(groups_section_name, group_entries[settings['groups_name_attr']][0], ','.join(group_entries[settings['group_member_attr']]))
+                    parser.set(groups_section_name, group_entries[settings['groups_name_attr']][0], ','.join(dnToUid(group_entries[settings['group_member_attr']], connection)))
         except ldap.LDAPError as e:
             if type(e.message) == dict and e.message.has_key('desc'):
                 error = e.message['desc']
@@ -144,6 +144,10 @@ def main():
     
 def print_error(error):
     print json.dumps({'error':error})
-		
+
+def dnToUid(dn, connection) {
+    return connection.search_s( str(dn), ldap.SCOPE_ONELEVEL, attrlist=[str(settings['users_name_attr'])] )
+}
+    
 if __name__ == '__main__':
 	main()	
