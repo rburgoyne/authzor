@@ -101,6 +101,11 @@ div.input-group > div.edit-multiple {
     color:#fff;
     box-shadow: 0 0 8px #000;
     z-index:3;
+    font-size:10pt;
+}
+
+#button-bar > label {
+    margin-left:1em;
 }
 
 input[type=button], input[type=submit] {
@@ -119,6 +124,7 @@ input[type=button]:active:enabled, input[type=submit]:active:enabled {
 #title {
     margin:0 1em;
     font-weight:bold;
+    font-size:12pt;
 }
 
 .selection-only-button {
@@ -126,8 +132,31 @@ input[type=button]:active:enabled, input[type=submit]:active:enabled {
 }
 
 #arrange-by-radio-button-group {
-	margin-left:50px;
-	font-size: 10pt;
+    margin-left:0.5em;
+}
+
+#arrange-by-radio-button-group label {
+    margin:0;
+}
+
+#arrange-by-radio-button-group label span {
+    text-align:center;
+    display:inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(92,92,92) #222 #222 rgb(92,92,92);
+    padding:0.25em 0.5em;
+    width:3.0em;
+}
+
+#arrange-by-radio-button-group label input {
+    visibility:hidden;
+    margin-left:-24px;
+    top:-20px;
+}
+
+#arrange-by-radio-button-group input:checked + span {
+    border-color: #222 rgb(92,92,92) rgb(92,92,92) #222;
 }
 
 #rules-section {

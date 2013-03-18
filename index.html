@@ -96,14 +96,18 @@
             <input type="button" id="edit-button" value="Edit" class="selection-only-button" />
             <input type="button" id="copy-button" value="Copy" class="selection-only-button" />
             <input type="button" id="delete-button" value="Delete" class="selection-only-button" />
-            <span id="arrange-by-radio-button-group">
-            	<label>Arrange by: </label>
-            	<input type="radio" id="arrange-by-path-radio-button"
-            		value="path" name="arrange-by" checked />
-            	<label for="arrange-by-path-radio-button">Path</label>
-            	<input type="radio" id="arrange-by-name-radio-button"
-            		value="name" name="arrange-by" />
-            	<label for="arrange-by-name-radio-button">User or group name</label>
+            <label>Arrange by:</label>
+            <span id="arrange-by-radio-button-group">           
+                <label>            	
+                    <input type="radio" id="arrange-by-path-radio-button"
+            		    value="path" name="arrange-by" checked />
+                    <span>Path</span>
+                </label>
+            	<label>            	
+                    <input type="radio" id="arrange-by-path-radio-button"
+            		    value="name" name="arrange-by" checked />
+                    <span>Name</span>
+                </label>
         	</span>
         	<input type="button" id="settings-button" value="Settings" />
         </div>
