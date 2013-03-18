@@ -351,6 +351,7 @@ function updatePermissionsCheckboxes() {
 
 function showModal(modal_form) {
     $('#button-bar input').attr("disabled","disabled");
+    $('#footer input').attr("disabled","disabled");
     $(modal_form).show().animate({top: $('#button-bar').height()}, 'slow');
     $('#cover').show().animate({opacity:0.4}, 'slow');
 }
@@ -368,6 +369,7 @@ function hideModal(modal_form) {
     refreshButtons();
 
     $('#button-bar input').removeAttr("disabled");
+    $('#footer input').removeAttr("disabled");
 }
 
 function clearInputs() {
