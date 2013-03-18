@@ -100,10 +100,25 @@ div.input-group > div.edit-multiple {
     background-color:#3D3D3D;
     color:#fff;
     box-shadow: 0 0 8px #000;
+    z-index:3;
+}
+
+input[type=button], input[type=submit] {
+    background-color:#3d3d3d;
+    color: #fff;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(92,92,92) #222 #222 rgb(92,92,92);
+    padding:0.25em 0.5em;
+}
+
+input[type=button]:active:enabled, input[type=submit]:active:enabled {
+    border-color: #222 rgb(92,92,92) rgb(92,92,92) #222;
 }
 
 #title {
-    margin-right:1em;
+    margin:0 1em;
+    font-weight:bold;
 }
 
 .selection-only-button {

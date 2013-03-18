@@ -106,7 +106,7 @@ $(document).ready(function() {
 	
 	// Set the height of modal forms to be just hidden behind the title bar  
 	$('form.modal').each(function() {
-	    $(this).offset({top:-($(this).height() + $('#title-bar').height())});
+	    $(this).offset({top:-($(this).height() + $('#button-bar').height())});
     });
     
     $('#refresh-button').click( function() {
@@ -350,13 +350,14 @@ function updatePermissionsCheckboxes() {
 }
 
 function showModal(modal_form) {
-    $(modal_form).show().animate({top: $('#title-bar').height()}, 'slow');
+    $('#button-bar input').attr("disabled","disabled");
+    $(modal_form).show().animate({top: $('#button-bar').height()}, 'slow');
     $('#cover').show().animate({opacity:0.4}, 'slow');
 }
 
 function hideModal(modal_form) {	
     $(modal_form).animate({top:-($(modal_form).height() + 
-        $('#title-bar').height())}, 'slow', function(){ $(this).hide() });
+        $('#button-bar').height())}, 'slow', function(){ $(this).hide() });
     $('#cover').animate({opacity:0}, 'slow', function(){ $(this).hide() });
     
     // Uncheck all boxes
@@ -365,6 +366,8 @@ function hideModal(modal_form) {
     edit = false;
     copy = false;
     refreshButtons();
+
+    $('#button-bar input').removeAttr("disabled");
 }
 
 function clearInputs() {
