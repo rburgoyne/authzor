@@ -163,7 +163,7 @@ input[type=button]:active:enabled, input[type=submit]:active:enabled {
 #rules-section {
     overflow:auto;
     position:absolute;
-    top:40px;
+    top:38px;
     bottom:65px;
     left:0;
     right:0;
