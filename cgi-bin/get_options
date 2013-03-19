@@ -10,7 +10,7 @@ import ldap
 import json
 import cgi
 
-config_location = '/var/www/authzor/authzor.conf'
+config_location = '../authzor.conf'
 
 # LDAP returns our search query in a complex format. This function parses out
 # the attribute we care about.

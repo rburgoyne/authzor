@@ -3,7 +3,7 @@
 import json
 import sys
 
-config_location = '/var/www/authzor/authzor.conf'
+config_location = '../authzor.conf'
 
 def main():
     print 'Content-type: application/json\n'
