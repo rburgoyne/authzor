@@ -53,7 +53,6 @@ def main():
                                       ldap.SCOPE_SUBTREE, str(settings['groups_filter']),
                                       [str(settings['groups_name_attr']), str(settings['group_member_attr'])])
             for group in groups:
-                print "### " + group[0] + " ###"
                 group_entries = ldap.cidict.cidict(group[1])
                 parser.set(groups_section_name, group_entries[settings['groups_name_attr']][0], ','.join(dnsToNames(settings['users_name_attr'], group_entries[settings['group_member_attr']], connection)))
         except ldap.LDAPError as e:
@@ -145,7 +144,6 @@ def print_error(error):
 def dnsToNames(usersNameAttr, dns, connection):
     names = []
     for dn in dns:
-        print dn
         result = connection.search_s( str(dn), ldap.SCOPE_BASE, attrlist=[str(usersNameAttr)] )
         name = result[0][1]['uid'][0]
         names.append(name)
