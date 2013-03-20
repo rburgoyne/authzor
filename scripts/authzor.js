@@ -210,7 +210,6 @@ function editSettings() {
 	settings['groups_prefix'] = $('#groups-prefix-input').val();
 	settings['groups_filter'] = $('#groups-filter-input').val();
 	settings['groups_name_attr'] = $('#groups-name-attr-input').val();
-	settings['svngroups_dn'] = $('#svngroups-dn-input').val();
 	settings['group_member_attr'] = $('#group-member-attr-input').val();
 }
 
@@ -237,7 +236,6 @@ function updateSettings() {
 				    $('#groups-prefix-input').val(settings['groups_prefix']);
 				    $('#groups-filter-input').val(settings['groups_filter']);
 				    $('#groups-name-attr-input').val(settings['groups_name_attr']);
-				    $('#svngroups-dn-input').val(settings['svngroups_dn']);
 				    $('#group-member-attr-input').val(settings['group_member_attr']);
 			    }
 			}

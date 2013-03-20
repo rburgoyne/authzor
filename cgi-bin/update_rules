@@ -52,13 +52,9 @@ def main():
             groups = connection.search_s( str(settings['groups_prefix']) + "," + str(settings['base_dn']),
                                       ldap.SCOPE_SUBTREE, str(settings['groups_filter']),
                                       [str(settings['groups_name_attr']), str(settings['group_member_attr'])])
-            svngroups_query_result = connection.search_s( str(settings['svngroups_dn']),
-                                      ldap.SCOPE_BASE, attrlist=[str(settings['group_member_attr'])] )
-            svngroups_entries = ldap.cidict.cidict(svngroups_query_result[0][1])
             for group in groups:
-                if group[0] in svngroups_entries[settings['group_member_attr']]:
-                    group_entries = ldap.cidict.cidict(group[1])
-                    parser.set(groups_section_name, group_entries[settings['groups_name_attr']][0], ','.join(dnsToNames(settings['users_name_attr'], group_entries[settings['group_member_attr']], connection)))
+                group_entries = ldap.cidict.cidict(group[1])
+                parser.set(groups_section_name, group_entries[settings['groups_name_attr']][0], ','.join(dnsToNames(settings['users_name_attr'], group_entries[settings['group_member_attr']], connection)))
         except ldap.LDAPError as e:
             if type(e.message) == dict and e.message.has_key('desc'):
                 error = e.message['desc']
