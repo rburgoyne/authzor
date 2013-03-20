@@ -127,6 +127,7 @@ input[type=button]:active:enabled, input[type=submit]:active:enabled {
     margin-right:1em;
     vertical-align:middle;
     font-size:12pt;
+    color:#17a54e;
 }
 
 .selection-only-button {
