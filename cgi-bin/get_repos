@@ -1,17 +1,23 @@
 #!/usr/bin/python
-
+"""
+Retrieve SVN root directory location from configuration
+file, then return a list of the repositories it contains
+"""
 import os
 import json
-import cgi
 
-config_location = '../authzor.conf'
+CONFIG_LOCATION = '../authzor.conf'
+
 
 def main():
+    """
+    Get the path to the SVN root directory from the configuration
+    file, then return a list of subdirectories
+    """
     print "Content-type: application/json\n"
-    
-    # Get configuration values
+
     try:
-        config_file = open(config_location)
+        config_file = open(CONFIG_LOCATION)
     except IOError:
         print_error('Could not open the configuration file.')
         raise
@@ -20,8 +26,6 @@ def main():
     except ValueError:
         print_error('Could not parse the configuration file.')
         raise
-   
-    # Connect to SVN to get a list of repositories
 
     try:
         repo_names = (next(os.walk(settings['svn_root_dir'])))[1]
@@ -30,9 +34,11 @@ def main():
     except StopIteration:
         print_error('The specified SVN root directory does not exist.')
         raise
-    
+
+
 def print_error(error):
-    print json.dumps({'error':error})
-  
+    """Take a string and print a JSON object containing it."""
+    print json.dumps({'error': error})
+
 if __name__ == "__main__":
     main()
