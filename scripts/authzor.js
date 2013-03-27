@@ -696,7 +696,6 @@ function showRules() {
         new_section['rules'] = [];
         new_section['rules'].push(rule);
         sections.push(new_section);
-    }
     });
 
 // Loop through the sections to construct the table
