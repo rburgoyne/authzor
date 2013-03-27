@@ -690,12 +690,14 @@ function showRules() {
         if (existing_section !== null) {
             existing_section['rules'].push(rule);
         }
-        // If it doesn't, create a new section and add the rule else {
-        var new_section = new Object();
-        new_section['name'] = section_name;
-        new_section['rules'] = [];
-        new_section['rules'].push(rule);
-        sections.push(new_section);
+        // If it doesn't, create a new section and add the rule
+        else {
+            var new_section = new Object();
+            new_section['name'] = section_name;
+            new_section['rules'] = [];
+            new_section['rules'].push(rule);
+            sections.push(new_section);
+        }
     });
 
 // Loop through the sections to construct the table
