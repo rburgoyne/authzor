@@ -83,18 +83,16 @@
     <form class="modal" id="rule-form" method="post" action="">
         <div class="input-group" id="path-input-group">
             <input class="edit-multiple-checkbox" type="checkbox">
-
-            <div>
+            <span>
                 <select id="repos-dropdown" name="repos"></select> 
                 <input id="path-input" name="path" placeholder="Path">
                 <div id="browse-list"></div>
-            </div>
+            </span>
         </div>
 
         <div class="input-group" id="name-input-group">
             <input class="edit-multiple-checkbox" type="checkbox">
-
-            <div>
+            <span>
                 <span class="radio-button-group"><span class=
                 "labeled-radio-button"><input id="all-radio-button" name=
                 "user-group" type="radio" value="all"> <label for=
@@ -109,18 +107,17 @@
                 "users-groups">
                     </select> <a id="refresh-button" title=
                     "Refresh users and groups from LDAP"></a>
-            </div>
+            </span>
         </div>
 
         <div class="input-group" id="permissions-input-group">
             <input class="edit-multiple-checkbox" type="checkbox">
-
-            <div>
+            <span>
                 <input id="read-checkbox" name="permissions" type="checkbox"
                 value="read"> <label for="read-checkbox">Read</label>
                 <input id="write-checkbox" name="permissions" type="checkbox"
                 value="write"> <label for="write-checkbox">Write</label>
-            </div>
+            </span>
         </div>
 
         <div id="path-invalid-message">

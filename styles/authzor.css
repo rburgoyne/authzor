@@ -32,22 +32,9 @@ body {
 .input-group {
     display: block;
     margin-bottom: 10px;
-}
-
-.input-group > div {
-    background-color: #e0e0e0;
+    background-color: #eee;
     padding: 10px;
-    border-radius: 5px;
-}
-
-.input-group > input[type=checkbox] {
-    display: inline-block;
-    width: 30px;
-}
-
-.input-group > .edit-multiple {
-    display: inline-block;
-    width: 335px;
+    border-radius: 3px;
 }
 
 #repos-dropdown {
