@@ -16,18 +16,21 @@ var checked_count = 0;
 var edit = false;
 var copy = false;
 
+function init() {
+    getOptions();
+    getRepos();
+    updateRules();
+    updateSettings();
+    clearInputs();
+}
+
 $(document).ready(function () {
     // Prevent Ajax caching - always get a new result
     $.ajaxSetup({
         cache: false
     });
 
-    getOptions();
-    getRepos();
-    updateRules();
-    updateSettings();
-    clearInputs();
-    $('#browse-list').hide();
+    init();
 
     // Add change event for user/group radio buttons to populate the dropdown
     // appropriately
@@ -145,6 +148,7 @@ $(document).ready(function () {
         hideModal($('#settings-form'));
         editSettings();
         updateSettings();
+        init();
     });
 });
 
