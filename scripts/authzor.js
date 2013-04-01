@@ -26,6 +26,7 @@ $(document).ready(function () {
     getRepos();
     updateRules();
     updateSettings();
+    clearInputs();
     $('#browse-list').hide();
 
     // Add change event for user/group radio buttons to populate the dropdown
