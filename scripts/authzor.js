@@ -396,7 +396,7 @@ function hideModal(modal_form) {
 }
 
 function clearInputs() {
-    $('#repos-dropdown').val('');
+    $('#repos-dropdown').val('/');
     repoChanged();
     $('#path-input').val('');
     $('#all-radio-button').prop('checked', 'checked');
