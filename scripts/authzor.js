@@ -310,7 +310,7 @@ function fillFormData() {
     // If multiple rules are checked, show the multi-edit interface
     if (edit_count > 1) {
         $('.edit-multiple-checkbox-container').show();
-        $('div.input-group').addClass('edit-multiple');
+        $('.input-group').addClass('edit-multiple');
         if (copy) {
             $('#ok-button').val('Copy Rules');
         } else {
