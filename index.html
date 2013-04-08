@@ -81,43 +81,56 @@
     </form>
 
     <form class="modal" id="rule-form" method="post" action="">
-        <div class="input-group" id="path-input-group">
-            <input class="edit-multiple-checkbox" type="checkbox">
-            <span>
-                <select id="repos-dropdown" name="repos"></select> 
-                <input id="path-input" name="path" placeholder="Path">
-                <div id="browse-list"></div>
-            </span>
-        </div>
+        <div class="selections"> 
+            <div class="edit-multiple-group">
+                <div class="edit-multiple-checkbox-container" hidden>
+                    <input class="edit-multiple-checkbox" type="checkbox">
+                </div>
+                <div class="input-group" id="path-input-group">
+                    <select id="repos-dropdown" name="repos"></select> 
+                    <input id="path-input" name="path" placeholder="Path">
+                    <div id="browse-list"></div>
+                </div>
+            </div>
 
-        <div class="input-group" id="name-input-group">
-            <input class="edit-multiple-checkbox" type="checkbox">
-            <span>
-                <span class="radio-button-group"><span class=
-                "labeled-radio-button"><input id="all-radio-button" name=
-                "user-group" type="radio" value="all"> <label for=
-                "all-radio-button" checked>All</label></span> <span class=
-                "labeled-radio-button"><input id="user-radio-button" name=
-                "user-group" type="radio" value="user"> <label for=
-                "user-radio-button">User</label></span> <span class=
-                "labeled-radio-button"><input id="group-radio-button" name=
-                "user-group" type="radio" value="group"> <label for=
-                "group-radio-button">Group</label></span></span>
-                <select disabled="disabled" id="users-groups-dropdown" name=
-                "users-groups">
-                    </select> <a id="refresh-button" title=
-                    "Refresh users and groups from LDAP"></a>
-            </span>
-        </div>
-
-        <div class="input-group" id="permissions-input-group">
-            <input class="edit-multiple-checkbox" type="checkbox">
-            <span>
-                <input id="read-checkbox" name="permissions" type="checkbox"
-                value="read"> <label for="read-checkbox">Read</label>
-                <input id="write-checkbox" name="permissions" type="checkbox"
-                value="write"> <label for="write-checkbox">Write</label>
-            </span>
+            <div class="edit-multiple-group">
+                <div class="edit-multiple-checkbox-container">
+                    <input class="edit-multiple-checkbox" type="checkbox">
+                </div>
+                <div class="input-group" id="name-input-group">
+                    <input class="edit-multiple-checkbox" type="checkbox">
+                    <span>
+                        <span class="radio-button-group"><span class=
+                        "labeled-radio-button"><input id="all-radio-button" name=
+                        "user-group" type="radio" value="all"> <label for=
+                        "all-radio-button" checked>All</label></span> <span class=
+                        "labeled-radio-button"><input id="user-radio-button" name=
+                        "user-group" type="radio" value="user"> <label for=
+                        "user-radio-button">User</label></span> <span class=
+                        "labeled-radio-button"><input id="group-radio-button" name=
+                        "user-group" type="radio" value="group"> <label for=
+                        "group-radio-button">Group</label></span></span>
+                        <select disabled="disabled" id="users-groups-dropdown" name=
+                        "users-groups">
+                            </select> <a id="refresh-button" title=
+                            "Refresh users and groups from LDAP"></a>
+                    </span>
+                </div>
+            </div>
+            <div class="edit-multiple-group">
+                <div class="edit-multiple-checkbox-container">
+                    <input class="edit-multiple-checkbox" type="checkbox">
+                </div>
+                <div class="input-group" id="permissions-input-group">
+                    <input class="edit-multiple-checkbox" type="checkbox">
+                    <span>
+                        <input id="read-checkbox" name="permissions" type="checkbox"
+                        value="read"> <label for="read-checkbox">Read</label>
+                        <input id="write-checkbox" name="permissions" type="checkbox"
+                        value="write"> <label for="write-checkbox">Write</label>
+                    </span>
+                </div>
+            </div>
         </div>
 
         <div id="path-invalid-message">

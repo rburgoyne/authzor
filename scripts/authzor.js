@@ -22,6 +22,7 @@ function init() {
     updateRules();
     updateSettings();
     clearInputs();
+    $('#browse-list').hide();
 }
 
 $(document).ready(function () {
@@ -308,16 +309,16 @@ function fillFormData() {
 
     // If multiple rules are checked, show the multi-edit interface
     if (edit_count > 1) {
-        $('div.input-group > :checkbox').show();
-        $('div.input-group > div').addClass('edit-multiple');
+        $('.edit-multiple-checkbox-container').show();
+        $('div.input-group').addClass('edit-multiple');
         if (copy) {
             $('#ok-button').val('Copy Rules');
         } else {
             $('#ok-button').val('Change Rules');
         }
     } else {
-        $('div.input-group > :checkbox').hide();
-        $('div.input-group > div').removeClass('edit-multiple');
+        $('.edit-multiple-checkbox-container').hide();
+        $('.input-group').removeClass('edit-multiple');
         if (copy) {
             $('#ok-button').val('Copy Rule');
         } else {
@@ -396,7 +397,7 @@ function hideModal(modal_form) {
 }
 
 function clearInputs() {
-    $('#repos-dropdown').val('/');
+    $('#repos-dropdown').val('');
     repoChanged();
     $('#path-input').val('');
     $('#all-radio-button').prop('checked', 'checked');
@@ -705,161 +706,161 @@ function showRules() {
         }
     });
 
-// Loop through the sections to construct the table
-$.each(sections, function (index, section) {
-    // Create a tbody
-    var section_body = $('<tbody></tbody>');
-    // Create the header row
-    var header_row = $('<tr class="header-row">' +
-        '<td><input type="checkbox" class="select-all-checkbox" /></td>' +
-        '<td class="fill-column"><span>' + section['name'] +
-        '</span><a class="new-link">New</a>' + '</td>' +
-        '<td class="checkbox-column">Read</td><td class="checkbox-column">Write</td>' +
-        '</tr>');
-
-    // Store data about the section with the header row (for use by "new" links)
-    if ($('#arrange-by-path-radio-button').is(':checked')) {
-        header_row.data('repo', section['rules'][0]['repo']);
-        header_row.data('path', section['rules'][0]['path']);
-    } else {
-        header_row.data('name_type', section['rules'][0]['name_type']);
-        header_row.data('name', section['rules'][0]['name']);
-    }
-    section_body.append(header_row);
-
-    // Create a row for each rule
-    $.each(section['rules'], function (index, rule) {
-        // Assign a name to display depending on arrange by preference
-        var rule_name = '';
-        if ($('#arrange-by-path-radio-button').is(':checked')) {
-            rule_name = getDisplayName(rule);
-        } else {
-            rule_name = getFullPath(rule);
-        }
-
-        var read, write;
-        if (rule["permissions"] == R) {
-            read = true;
-            write = false;
-        } else if (rule["permissions"] == RW) {
-            read = true;
-            write = true;
-        } else {
-            read = false;
-            write = false;
-        }
-
-        // These checkboxes are purely representational -- the represent the read or write 
-        // permissions for the rule and cannot be changed in the web interface. That is why
-        // They are images instead of HTML form checkboxes.
-        var read_checkbox = (read ?
-            '<img src="images/checkbox_checked.png" alt="Read" title="Read" />' :
-            '<img src="images/checkbox_empty.png" alt="No read" title="No read" />');
-        var write_checkbox = (write ?
-            '<img src="images/checkbox_checked.png" alt="Write" title="Write" />' :
-            '<img src="images/checkbox_empty.png" alt="No write" title="No write" />');
-
-        // Add background color and show an appropriate icon if the rule is pending addition or deletion,
-        // or a checkbox if the rule is up-to-date.
-        var rule_class = '';
-        var checkbox_icon = '';
-        if (rule['added']) {
-            rule_class = 'added-rule';
-            checkbox_icon =
-                '<img src="images/plus.png" alt="Added" title="Added" />';
-        } else if (rule['deleted']) {
-            rule_class = 'deleted-rule';
-            checkbox_icon =
-                '<img src="images/minus.png" alt="Deleted" title="Deleted" />';
-        } else {
-            checkbox_icon = '<input type="checkbox" />';
-        }
-
-        var table_row = $('<tr class=' + rule_class + '>' +
-            '<td>' + checkbox_icon + '</td>' +
-            '<td class="fill-column">' + rule_name + '</td>' +
-            '<td class="checkbox-column">' + read_checkbox + '</td>' +
-            '<td class="checkbox-column">' + write_checkbox + '</td>' +
+    // Loop through the sections to construct the table
+    $.each(sections, function (index, section) {
+        // Create a tbody
+        var section_body = $('<tbody></tbody>');
+        // Create the header row
+        var header_row = $('<tr class="header-row">' +
+            '<td><input type="checkbox" class="select-all-checkbox" /></td>' +
+            '<td class="fill-column"><span>' + section['name'] +
+            '</span><a class="new-link">New</a>' + '</td>' +
+            '<td class="checkbox-column">Read</td><td class="checkbox-column">Write</td>' +
             '</tr>');
 
-        // Scroll to the newest changed rule after showing rules
-        if ((rule['added'] || rule['deleted']) && !scroll_here) {
-            scroll_here = table_row;
+        // Store data about the section with the header row (for use by "new" links)
+        if ($('#arrange-by-path-radio-button').is(':checked')) {
+            header_row.data('repo', section['rules'][0]['repo']);
+            header_row.data('path', section['rules'][0]['path']);
+        } else {
+            header_row.data('name_type', section['rules'][0]['name_type']);
+            header_row.data('name', section['rules'][0]['name']);
         }
+        section_body.append(header_row);
 
-        section_body.append(table_row);
+        // Create a row for each rule
+        $.each(section['rules'], function (index, rule) {
+            // Assign a name to display depending on arrange by preference
+            var rule_name = '';
+            if ($('#arrange-by-path-radio-button').is(':checked')) {
+                rule_name = getDisplayName(rule);
+            } else {
+                rule_name = getFullPath(rule);
+            }
+
+            var read, write;
+            if (rule["permissions"] == R) {
+                read = true;
+                write = false;
+            } else if (rule["permissions"] == RW) {
+                read = true;
+                write = true;
+            } else {
+                read = false;
+                write = false;
+            }
+
+            // These checkboxes are purely representational -- the represent the read or write 
+            // permissions for the rule and cannot be changed in the web interface. That is why
+            // They are images instead of HTML form checkboxes.
+            var read_checkbox = (read ?
+                '<img src="images/checkbox_checked.png" alt="Read" title="Read" />' :
+                '<img src="images/checkbox_empty.png" alt="No read" title="No read" />');
+            var write_checkbox = (write ?
+                '<img src="images/checkbox_checked.png" alt="Write" title="Write" />' :
+                '<img src="images/checkbox_empty.png" alt="No write" title="No write" />');
+
+            // Add background color and show an appropriate icon if the rule is pending addition or deletion,
+            // or a checkbox if the rule is up-to-date.
+            var rule_class = '';
+            var checkbox_icon = '';
+            if (rule['added']) {
+                rule_class = 'added-rule';
+                checkbox_icon =
+                    '<img src="images/plus.png" alt="Added" title="Added" />';
+            } else if (rule['deleted']) {
+                rule_class = 'deleted-rule';
+                checkbox_icon =
+                    '<img src="images/minus.png" alt="Deleted" title="Deleted" />';
+            } else {
+                checkbox_icon = '<input type="checkbox" />';
+            }
+
+            var table_row = $('<tr class=' + rule_class + '>' +
+                '<td>' + checkbox_icon + '</td>' +
+                '<td class="fill-column">' + rule_name + '</td>' +
+                '<td class="checkbox-column">' + read_checkbox + '</td>' +
+                '<td class="checkbox-column">' + write_checkbox + '</td>' +
+                '</tr>');
+
+            // Scroll to the newest changed rule after showing rules
+            if ((rule['added'] || rule['deleted']) && !scroll_here) {
+                scroll_here = table_row;
+            }
+
+            section_body.append(table_row);
+        });
+
+        $('#rules-table').append(section_body);
     });
 
-    $('#rules-table').append(section_body);
-});
+    // Add click event for "check all" (at the top of each section) to work
+    $(".select-all-checkbox").click(function () {
+        if (this.checked) {
+            to_change = $(this).closest('tbody').find(':checkbox:not(:checked)');
+            $(to_change).prop('checked', true);
+            checked_count += to_change.length;
+        } else {
+            to_change = $(this).closest('tbody').find(':checkbox:checked');
+            $(to_change).prop('checked', false);
+            checked_count -= to_change.length;
+        }
 
-// Add click event for "check all" (at the top of each section) to work
-$(".select-all-checkbox").click(function () {
-    if (this.checked) {
-        to_change = $(this).closest('tbody').find(':checkbox:not(:checked)');
-        $(to_change).prop('checked', true);
-        checked_count += to_change.length;
-    } else {
-        to_change = $(this).closest('tbody').find(':checkbox:checked');
-        $(to_change).prop('checked', false);
-        checked_count -= to_change.length;
+        refreshButtons();
+    });
+
+    $('#rules-section input[type=checkbox]:not(.select-all-checkbox)').click(function (
+        event) {
+        // Uncheck select-all checkbox if any checkbox in its section is 
+        // clicked
+        $(this).closest('tbody').find('.select-all-checkbox').prop('checked',
+            false);
+
+        // Only show the edit, copy, and delete buttons when 
+        // something is checked
+        if ($(this).is(':checked')) {
+            checked_count += 1;
+        } else {
+            checked_count -= 1;
+        }
+
+        refreshButtons();
+    });
+
+    $('.new-link').hide().click(function () {
+        var header_row = $(this).closest('tr');
+        if ($('#arrange-by-path-radio-button').is(':checked')) {
+            // We know which path the new rule is for, but not which user
+            $('#repos-dropdown').val(header_row.data('repo'));
+            $('#path-input').val(header_row.data('path'));
+            repoChanged();
+        } else {
+            // We know which user the new rule is for, but not which path
+            $('#all-radio-button').prop('checked', 'checked'); // By default, pick "All"
+            $('#user-radio-button').prop('checked', (header_row.data(
+                'name_type') == USER));
+            $('#group-radio-button').prop('checked', (header_row.data(
+                'name_type') == GROUP));
+            updateUsersGroups();
+            $('#users-groups-dropdown').val(header_row.data('name'));
+        }
+        showNewRuleForm();
+    });
+
+    $('.header-row').hover(function () {
+        $(this).find('.new-link').show();
+    }, function () {
+        $(this).find('.new-link').hide();
+    });
+
+    // Processing complete, show rules section.
+    $('#rules-section').show().animate({
+        opacity: 1
+    }, 'slow');
+
+    if (scroll_here) {
+        scroll_here[0].scrollIntoView(true);
     }
-
-    refreshButtons();
-});
-
-$('#rules-section input[type=checkbox]:not(.select-all-checkbox)').click(function (
-    event) {
-    // Uncheck select-all checkbox if any checkbox in its section is 
-    // clicked
-    $(this).closest('tbody').find('.select-all-checkbox').prop('checked',
-        false);
-
-    // Only show the edit, copy, and delete buttons when 
-    // something is checked
-    if ($(this).is(':checked')) {
-        checked_count += 1;
-    } else {
-        checked_count -= 1;
-    }
-
-    refreshButtons();
-});
-
-$('.new-link').hide().click(function () {
-    var header_row = $(this).closest('tr');
-    if ($('#arrange-by-path-radio-button').is(':checked')) {
-        // We know which path the new rule is for, but not which user
-        $('#repos-dropdown').val(header_row.data('repo'));
-        $('#path-input').val(header_row.data('path'));
-        repoChanged();
-    } else {
-        // We know which user the new rule is for, but not which path
-        $('#all-radio-button').prop('checked', 'checked'); // By default, pick "All"
-        $('#user-radio-button').prop('checked', (header_row.data(
-            'name_type') == USER));
-        $('#group-radio-button').prop('checked', (header_row.data(
-            'name_type') == GROUP));
-        updateUsersGroups();
-        $('#users-groups-dropdown').val(header_row.data('name'));
-    }
-    showNewRuleForm();
-});
-
-$('.header-row').hover(function () {
-    $(this).find('.new-link').show();
-}, function () {
-    $(this).find('.new-link').hide();
-});
-
-// Processing complete, show rules section.
-$('#rules-section').show().animate({
-    opacity: 1
-}, 'slow');
-
-if (scroll_here) {
-    scroll_here[0].scrollIntoView(true);
-}
 }
 
 function refreshButtons() {
