@@ -131,7 +131,7 @@ $(document).ready(function () {
 
     // Check multi-edit boxes when changes are made
     $('.input-group input, .input-group select').change(function () {
-        $(this).closest(.edit-multiple-group').find('.edit-multiple-checkbox')
+        $(this).closest('.edit-multiple-group').find('.edit-multiple-checkbox')
             .prop('checked', 'checked');
     });
 
