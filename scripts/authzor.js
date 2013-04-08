@@ -130,8 +130,8 @@ $(document).ready(function () {
     });
 
     // Check multi-edit boxes when changes are made
-    $('div.input-group > div input, div.input-group > div select').change(function () {
-        $(this).closest('div.input-group').find('input.edit-multiple-checkbox')
+    $('.input-group input, .input-group select').change(function () {
+        $(this).closest(.edit-multiple-group').find('.edit-multiple-checkbox')
             .prop('checked', 'checked');
     });
 
@@ -154,8 +154,8 @@ $(document).ready(function () {
 });
 
 function showNewRuleForm() {
-    $('div.input-group > :checkbox').hide();
-    $('div.input-group > div').removeClass('edit-multiple');
+    $('.edit-multiple-checkbox-container').hide();
+    $('.input-group').removeClass('edit-multiple');
     $('#ok-button').val('Add Rule');
     showModal($('#rule-form'));
 }
@@ -540,12 +540,12 @@ function editChecked() {
 
     // If editing multiple rules, 
     if ($('#rules-table tr:not(.header-row) :checkbox:checked').length > 1) {
-        edit_path = $('#path-input-group input.edit-multiple-checkbox').is(
+        edit_path = $('#path-edit-multiple-checkbox').is(
             ':checked');
-        edit_name = $('#name-input-group input.edit-multiple-checkbox').is(
+        edit_name = $('#name-edit-multiple-checkbox').is(
             ':checked');
         edit_permissions = $(
-            '#permissions-input-group input.edit-multiple-checkbox').is(
+            '#permissions-edit-multiple-checkbox').is(
             ':checked');
     }
 
