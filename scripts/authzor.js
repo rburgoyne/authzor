@@ -19,7 +19,7 @@ var copy = false;
 function init() {
     getOptions();
     getRepos();
-    updateRules();
+    getRules();
     getSettings();
     clearInputs();
     $('#browse-list').hide();
@@ -73,7 +73,7 @@ $(document).ready(function () {
     $('#save-button').click(function (event) {
         event.preventDefault();
         commitChanges();
-        updateRules();
+        setRules();
     });
 
     $('#button-bar input[name=arrange-by]').change(function () {
@@ -126,7 +126,7 @@ $(document).ready(function () {
 
     $('#revert-button').click(function () {
         rules = undefined;
-        updateRules();
+        getRules();
     });
 
     // Check multi-edit boxes when changes are made
