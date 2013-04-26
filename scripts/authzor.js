@@ -20,7 +20,7 @@ function init() {
     getOptions();
     getRepos();
     updateRules();
-    updateSettings();
+    getSettings();
     clearInputs();
     $('#browse-list').hide();
 }
@@ -136,7 +136,7 @@ $(document).ready(function () {
     });
 
     $('#settings-button').click(function () {
-        updateSettings();
+        getSettings();
         showModal($('#settings-form'));
     });
 
@@ -148,7 +148,7 @@ $(document).ready(function () {
         event.preventDefault();
         hideModal($('#settings-form'));
         editSettings();
-        updateSettings();
+        setSettings();
         init();
     });
 });
@@ -234,12 +234,20 @@ function editSettings() {
     settings['group_member_attr'] = $('#group-member-attr-input').val();
 }
 
-function updateSettings() {
+function setSettings() {
     $.ajax({
-        url: 'cgi-bin/update_settings',
+        url: 'cgi-bin/set_settings',
         type: 'PUT',
+        contentType: 'application/json'        
+        data: JSON.stringify(settings)
+    });
+}
+        
+function getSettings() {
+    $.ajax({
+        url: 'cgi-bin/get_settings',
+        type: 'GET',
         contentType: 'application/json',
-        data: JSON.stringify(settings),
         success: function (new_settings) {
             if (new_settings['error']) {
                 displayError(new_settings['error']);
@@ -462,12 +470,11 @@ function commitChanges() {
     }
 }
 
-function updateRules() {
+function getRules() {
     $.ajax({
-        url: 'cgi-bin/update_rules',
-        type: 'PUT',
+        url: 'cgi-bin/get_rules',
+        type: 'GET',
         contentType: 'application/json',
-        data: JSON.stringify(rules),
         success: function (new_rules) {
             if (new_rules['error']) {
                 displayError(new_rules['error']);
@@ -476,6 +483,15 @@ function updateRules() {
                 showRules();
             }
         }
+    });
+}
+
+function setRules() {
+    $.ajax({
+        url: 'cgi-bin/set_rules',
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(rules)
     });
 }
 

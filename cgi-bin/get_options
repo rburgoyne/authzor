@@ -5,8 +5,7 @@ groups obtained from LDAP.
 """
 import ldap
 import json
-
-CONFIG_LOCATION = '../authzor.conf'
+from shared import *
 
 
 def get_name(entry, attribute):
@@ -41,16 +40,7 @@ def main():
     """
     print "Content-type: application/json\n"
 
-    try:
-        config_file = open(CONFIG_LOCATION)
-    except IOError:
-        print_error('Could not open the configuration file.')
-        raise
-    try:
-        settings = json.loads(config_file.read())
-    except ValueError:
-        print_error('Could not parse the configuration file.')
-        raise
+    settings = read_config()
 
     users = None
     groups = None
@@ -85,10 +75,6 @@ def main():
     options = {'users': user_names, 'groups': group_names, 'error': None}
     print json.dumps(options)
 
-
-def print_error(error):
-    """Take a string and print a JSON object containing it."""
-    print json.dumps({'error': error})
 
 if __name__ == "__main__":
     main()
