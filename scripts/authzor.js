@@ -238,7 +238,7 @@ function setSettings() {
     $.ajax({
         url: 'cgi-bin/set_settings',
         type: 'PUT',
-        contentType: 'application/json'        
+        contentType: 'application/json',        
         data: JSON.stringify(settings)
     });
 }
