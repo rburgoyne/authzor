@@ -1,0 +1,20 @@
+#!/usr/bin/python
+"""
+Read configuration file and write it to STDOUT
+"""
+
+from shared import *
+
+def main():
+    try:
+        print 'Content-type: application/json\n'
+        config_file = open(CONFIG_LOCATION)
+        data = config_file.read()
+        print data
+        config_file.close()
+    except IOError:
+        print_error("Could not open the configuration file.")
+
+
+if __name__ == '__main__':
+    main()

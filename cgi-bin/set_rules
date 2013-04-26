@@ -1,0 +1,130 @@
+#!/usr/bin/python
+"""
+Read a JSON object containing authz rules from STDIN and
+write it to the authz file. Then get a list of groups
+from LDAP and add this to the authz file.
+"""
+import sys
+import ConfigParser
+import json
+import ldap
+from shared import *
+
+ALL = 'all'
+USER = 'user'
+GROUP = 'group'
+
+R = 'r'
+RW = 'rw'
+
+GROUPS_SECTION_NAME = 'groups'
+
+
+def main():
+    """
+    Get new authz rules from STDIN. Read authz location from
+    the configuration file. Write the rules to the authz file.
+    Query LDAP to get group names and membership. Write these
+    to the authz file as well.
+    """
+
+    settings = read_config()
+    parser = ConfigParser.RawConfigParser()
+    parser.optionxform = str  # Dont' convert strings to lower case
+    data = sys.stdin.read()
+    if data != '':
+        ldap_groups_to_parser(parser, settings)
+
+        try:
+            rules = json.loads(data)
+        except ValueError:
+            print_error('Could not parse rules data.')
+            raise
+        rules_to_parser(rules, parser)
+
+        try:
+            parser.write(open(settings['authz_file'], 'w'))
+        except IOError:
+            print_error('Could not open authz file.')
+            raise
+
+
+def ldap_groups_to_parser(parser, settings):
+    """Add groups section to the authz file."""
+    connection = ldap.initialize(str(settings['ldap_server_url']))
+    connection.simple_bind_s()
+    if not parser.has_section(GROUPS_SECTION_NAME):
+        parser.add_section(GROUPS_SECTION_NAME)
+    groups = query_ldap_groups(connection, settings)
+    for group in groups:
+        group_entries = ldap.cidict.cidict(group[1])
+        parser.set(GROUPS_SECTION_NAME,
+            group_entries[settings['groups_name_attr']][0],
+            ','.join(dns_to_names(settings['users_name_attr'],
+            group_entries[settings['group_member_attr']], connection)))
+
+
+def query_ldap_groups(connection, settings):
+    """Query LDAP for a list of groups and their members"""
+    groups = None
+    try:
+        groups = connection.search_s(str(settings['groups_prefix']) +
+            "," + str(settings['base_dn']),
+            ldap.SCOPE_SUBTREE, str(settings['groups_filter']),
+            [str(settings['groups_name_attr']),
+            str(settings['group_member_attr'])])
+    except ldap.LDAPError as err:
+        if type(err.message) == dict and 'desc' in err.message:
+            error = err.message['desc']
+        else:
+            error = str(err)
+        print_error(error)
+        raise
+    return groups
+
+
+def rules_to_parser(rules, parser):
+    """
+    Take a list of rules, parse each one, and add them to the
+    configuration parser.
+    """
+    for rule in rules:
+        if rule['repo'] == '/':
+            full_path = rule['repo']
+        elif rule['path'] == '':
+            full_path = rule['repo'] + ":" + '/'
+        else:
+            full_path = rule['repo'] + ":" + rule['path']
+        if not parser.has_section(full_path):
+            parser.add_section(full_path)
+
+        name = ''
+        if rule['name_type'] == ALL:
+            name = '*'
+        elif rule['name_type'] == GROUP:
+            name = '@' + rule['name']
+        else:
+            name = rule['name']
+
+        permissions = ''
+        if rule['permissions'] == R:
+            permissions = 'r'
+        elif rule['permissions'] == RW:
+            permissions = 'rw'
+
+        parser.set(full_path, name, permissions)
+
+
+def dns_to_names(users_name_attr, dns, connection):
+    """For a list of DNs, return a list of user names."""
+    names = []
+    for dname in dns:
+        result = connection.search_s(str(dname), ldap.SCOPE_BASE,
+            attrlist=[str(users_name_attr)])
+        name = result[0][1]['uid'][0]
+        names.append(name)
+    return names
+
+
+if __name__ == '__main__':
+    main()

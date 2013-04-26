@@ -1,0 +1,54 @@
+#!/usr/bin/python
+"""
+Read the authz file out as a JSON object.
+"""
+
+import ConfigParser
+import json
+from shared import *
+
+def main():
+    print 'Content-type: application/json\n'
+    settings = read_config()
+    parser = ConfigParser.RawConfigParser()
+    parser.optionxform = str
+
+    try:
+        parser.read(settings['authz_file'])
+    except IOError:
+        print_error('Could not open authz file.')
+        raise
+    except ConfigParser.Error:
+        print_error('Could not parse authz file.')
+        raise
+    rules = parser_to_rules(parser)
+    print json.dumps(rules)
+
+
+def parser_to_rules(parser):
+    """Read config file and convert to a list of rules."""
+    rules = []
+    for section in parser.sections():
+        if section != 'groups':
+            for item in parser.items(section):
+                rule = {}
+                split_path = section.partition(':')
+                rule['repo'] = split_path[0]
+                rule['path'] = split_path[2]
+                name = item[0]
+                permissions = item[1]
+                if name == '*':
+                    rule['name_type'] = ALL
+                elif (name[0] == '@') or (name[0] == '~' and name[1] == '@'):
+                    rule['name_type'] = GROUP
+                else:
+                    rule['name_type'] = USER
+                rule['name'] = name.lstrip('~').lstrip('@*')
+                if permissions == 'r':
+                    rule['permissions'] = R
+                elif permissions == 'rw':
+                    rule['permissions'] = RW
+                else:
+                    rule['permissions'] = None
+                rules.append(rule)
+    return rules
