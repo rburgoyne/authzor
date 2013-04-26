@@ -34,6 +34,7 @@ body {
     border-collapse:separate;
     border-spacing:.3em;
     width:100%;
+    float:right;
 }
 
 .edit-multiple-group {
@@ -92,6 +93,7 @@ body {
 .modal .buttons {
     display: block;
     float: right;
+    padding: .3em;
 }
 
 #settings-button {
@@ -273,7 +275,7 @@ table {
 
 .labeled-input label {
     display: inline-block;
-    width: 200px;
+    width: 175px;
     font-size: 10pt;
 }
 
@@ -281,8 +283,8 @@ table {
     background-color: #fff !important;
     margin-top: 10px;
     overflow: auto;
-    height: 300px;
-    box-shadow: inset 0 0 5px #17a54e;
+    width: 315px;
+    border: 1px solid #ccc;
     padding: 5px;
 }
 

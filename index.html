@@ -15,62 +15,68 @@
 
 <body>
     <form class="modal" id="settings-form" method="post" action="">
-        <div class="input-group" id="svn-input-group">
-            <div class="labeled-input">
-                <label>SVN root directory:</label><input id=
-                "svn-root-dir-input" name="svn-root-dir">
+        <div class="selections">
+            <div class="edit-multiple-group">
+                <div class="input-group" id="svn-input-group">
+                    <div class="labeled-input">
+                        <label>SVN root directory:</label><input id=
+                        "svn-root-dir-input" name="svn-root-dir">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Authorization file:</label><input id="authz-file-input"
+                        name="authz-file">
+                    </div>
+                </div>
             </div>
 
-            <div class="labeled-input">
-                <label>Authorization file:</label><input id="authz-file-input"
-                name="authz-file">
-            </div>
-        </div>
+            <div class="edit-multiple-group">
+                <div class="input-group" id="ldap-input-group">
+                    <div class="labeled-input">
+                        <label>LDAP server URL:</label><input id=
+                        "ldap-server-url-input" name="ldap-server-url">
+                    </div>
 
-        <div class="input-group" id="ldap-input-group">
-            <div class="labeled-input">
-                <label>LDAP server URL:</label><input id=
-                "ldap-server-url-input" name="ldap-server-url">
-            </div>
+                    <div class="labeled-input">
+                        <label>Base DN:</label><input id="base-dn-input" name=
+                        "base-dn">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Base DN:</label><input id="base-dn-input" name=
-                "base-dn">
-            </div>
+                    <div class="labeled-input">
+                        <label>Users prefix:</label><input id="users-prefix-input"
+                        name="users-prefix">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Users prefix:</label><input id="users-prefix-input"
-                name="users-prefix">
-            </div>
+                    <div class="labeled-input">
+                        <label>Users filter:</label><input id="users-filter-input"
+                        name="users-filter">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Users filter:</label><input id="users-filter-input"
-                name="users-filter">
-            </div>
+                    <div class="labeled-input">
+                        <label>Users name attribute:</label><input id=
+                        "users-name-attr-input" name="users-name-attr">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Users name attribute:</label><input id=
-                "users-name-attr-input" name="users-name-attr">
-            </div>
+                    <div class="labeled-input">
+                        <label>Groups prefix:</label><input id="groups-prefix-input"
+                        name="groups-prefix">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Groups prefix:</label><input id="groups-prefix-input"
-                name="groups-prefix">
-            </div>
+                    <div class="labeled-input">
+                        <label>Groups filter:</label><input id="groups-filter-input"
+                        name="groups-filter">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Groups filter:</label><input id="groups-filter-input"
-                name="groups-filter">
-            </div>
+                    <div class="labeled-input">
+                        <label>Groups name attribute:</label><input id=
+                        "groups-name-attr-input" name="groups-name-attr">
+                    </div>
 
-            <div class="labeled-input">
-                <label>Groups name attribute:</label><input id=
-                "groups-name-attr-input" name="groups-name-attr">
-            </div>
-
-            <div class="labeled-input">
-                <label>Groups member attribute:</label><input id=
-                "group-member-attr-input" name="group-member-attr">
+                    <div class="labeled-input">
+                        <label>Groups member attribute:</label><input id=
+                        "group-member-attr-input" name="group-member-attr">
+                    </div>
+                </div>
             </div>
         </div>
 
