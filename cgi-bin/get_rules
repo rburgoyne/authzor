@@ -52,3 +52,7 @@ def parser_to_rules(parser):
                     rule['permissions'] = None
                 rules.append(rule)
     return rules
+
+
+if __name__ == '__main__':
+    main()
