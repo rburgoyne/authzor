@@ -7,6 +7,13 @@ import ConfigParser
 import json
 from shared import *
 
+ALL = 'all'
+USER = 'user'
+GROUP = 'group'
+
+R = 'r'
+RW = 'rw'
+
 def main():
     print 'Content-type: application/json\n'
     settings = read_config()
