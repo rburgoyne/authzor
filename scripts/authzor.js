@@ -17,10 +17,10 @@ var edit = false;
 var copy = false;
 
 function init() {
+    getSettings();
     getOptions();
     getRepos();
     getRules();
-    getSettings();
     clearInputs();
     $('#browse-list').hide();
 }
