@@ -149,7 +149,6 @@ $(document).ready(function () {
         hideModal($('#settings-form'));
         editSettings();
         setSettings();
-        init();
     });
 });
 
@@ -239,7 +238,8 @@ function setSettings() {
         url: 'cgi-bin/set_settings',
         type: 'PUT',
         contentType: 'application/json',        
-        data: JSON.stringify(settings)
+        data: JSON.stringify(settings),
+        success: init()
     });
 }
         
