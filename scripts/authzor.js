@@ -239,7 +239,9 @@ function setSettings() {
         type: 'PUT',
         contentType: 'application/json',        
         data: JSON.stringify(settings),
-        success: init()
+        success: function () {
+            init();
+        }
     });
 }
         
