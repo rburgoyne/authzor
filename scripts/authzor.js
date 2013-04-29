@@ -254,6 +254,12 @@ function getSettings() {
             } else {
                 settings = new_settings;
                 if (settings !== null) {
+                    if (settings['show_settings']) {
+                        $('#settings-button').show();
+                    }
+                    else {
+                        $('#settings-button').hide();
+                    }
                     $('#svn-root-dir-input').val(settings['svn_root_dir']);
                     $('#authz-file-input').val(settings['authz_file']);
                     $('#ldap-server-url-input').val(settings['ldap_server_url']);
