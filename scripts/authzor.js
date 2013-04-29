@@ -178,33 +178,35 @@ function repoChanged() {
 // This is called when a repository is selected
 
 function loadBrowseList() {
-    $('#browse-list').jstree({
-        "json_data": {
-            // See http://www.jstree.com/documentation/json_data under heading "ajax" for more information
-            "ajax": {
-                "url": 'cgi-bin/browse_path',
-                "data": function (path) { // compose the input data for browse_path
-                    if (path == -1) {
-                        return {
-                            'path': 'file://' + settings['svn_root_dir'] + '/' + $(
-                                '#repos-dropdown').val()
-                        };
-                    } else {
-                        return {
-                            'path': $(path).data('full_path')
-                        };
+    if (settings) {
+        $('#browse-list').jstree({
+            "json_data": {
+                // See http://www.jstree.com/documentation/json_data under heading "ajax" for more information
+                "ajax": {
+                    "url": 'cgi-bin/browse_path',
+                    "data": function (path) { // compose the input data for browse_path
+                        if (path == -1) {
+                            return {
+                                'path': 'file://' + settings['svn_root_dir'] + '/' + $(
+                                    '#repos-dropdown').val()
+                            };
+                        } else {
+                            return {
+                                'path': $(path).data('full_path')
+                            };
+                        }
                     }
                 }
-            }
-        },
-        "plugins": ["themes", "json_data", "ui"]
-    }).bind("select_node.jstree", function (event, data) { // bind an event handler to the "select_node"
-        // jstree event
-        var rel_path = data.rslt.obj.data('full_path').replace('file://' +
-            settings['svn_root_dir'] + '/', '');
-        rel_path = rel_path.substring(rel_path.indexOf('/'), rel_path.length);
-        $('#path-input').val(rel_path).change();
-    });
+            },
+            "plugins": ["themes", "json_data", "ui"]
+        }).bind("select_node.jstree", function (event, data) { // bind an event handler to the "select_node"
+            // jstree event
+            var rel_path = data.rslt.obj.data('full_path').replace('file://' +
+                settings['svn_root_dir'] + '/', '');
+            rel_path = rel_path.substring(rel_path.indexOf('/'), rel_path.length);
+            $('#path-input').val(rel_path).change();
+        });
+    }
 }
 
 function updatePathInputs() {

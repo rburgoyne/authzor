@@ -26,8 +26,8 @@ def main():
     the configuration file. Write the rules to the authz file.
     Query LDAP to get group names and membership. Write these
     to the authz file as well.
-    """
-
+    """    
+    print 'Content-type: application/json\n'
     settings = read_config()
     parser = ConfigParser.RawConfigParser()
     parser.optionxform = str  # Dont' convert strings to lower case

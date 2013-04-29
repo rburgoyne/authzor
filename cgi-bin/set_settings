@@ -10,7 +10,8 @@ def main():
     """
     Read configuration object from STDIN
     and write to file.
-    """
+    """    
+    print 'Content-type: application/json\n'
     try:
         data = sys.stdin.read()
         if data != '':
