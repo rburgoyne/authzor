@@ -239,7 +239,7 @@ function setSettings() {
         type: 'PUT',
         contentType: 'application/json',        
         data: JSON.stringify(settings),
-        success: function () {
+        complete: function () {
             init();
         }
     });
