@@ -4,7 +4,7 @@ Read configuration object in JSON format from STDIN
 and write it directly to file.
 """
 import sys
-from shared import *
+import shared
 
 def main():
     """
@@ -15,11 +15,11 @@ def main():
     try:
         data = sys.stdin.read()
         if data != '':
-            config_file = open(CONFIG_LOCATION, 'w')
+            config_file = open(shared.CONFIG_LOCATION, 'w')
             config_file.write(data)
             config_file.close()
     except IOError:
-        print_error("Could not open the configuration file.")
+        shared.print_error("Could not open the configuration file.")
 
 
 if __name__ == '__main__':

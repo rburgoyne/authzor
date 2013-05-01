@@ -5,7 +5,7 @@ groups obtained from LDAP.
 """
 import ldap
 import json
-from shared import *
+import shared
 
 
 def get_name(entry, attribute):
@@ -19,7 +19,7 @@ def get_name(entry, attribute):
     try:
         names = attributes[attribute]
     except KeyError:
-        print_error('The attribute ' + attribute + ' does not exist.')
+        shared.print_error('The attribute ' + attribute + ' does not exist.')
         raise
     name = names[0]
     return name
@@ -40,7 +40,7 @@ def main():
     """
     print "Content-type: application/json\n"
 
-    settings = read_config()
+    settings = shared.read_config()
 
     users = None
     groups = None
@@ -63,7 +63,7 @@ def main():
             error = err.message['desc']
         else:
             error = str(err)
-        print_error(error)
+        shared.print_error(error)
         raise
 
     user_names = get_names(users, settings['users_name_attr'])

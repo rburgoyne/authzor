@@ -8,7 +8,7 @@ import sys
 import ConfigParser
 import json
 import ldap
-from shared import *
+import shared
 
 ALL = 'all'
 USER = 'user'
@@ -28,7 +28,7 @@ def main():
     to the authz file as well.
     """    
     print 'Content-type: application/json\n'
-    settings = read_config()
+    settings = shared.read_config()
     parser = ConfigParser.RawConfigParser()
     parser.optionxform = str  # Dont' convert strings to lower case
     data = sys.stdin.read()
@@ -38,14 +38,14 @@ def main():
         try:
             rules = json.loads(data)
         except ValueError:
-            print_error('Could not parse rules data.')
+            shared.print_error('Could not parse rules data.')
             raise
         rules_to_parser(rules, parser)
 
         try:
             parser.write(open(settings['authz_file'], 'w'))
         except IOError:
-            print_error('Could not open authz file.')
+            shared.print_error('Could not open authz file.')
             raise
 
 
@@ -78,7 +78,7 @@ def query_ldap_groups(connection, settings):
             error = err.message['desc']
         else:
             error = str(err)
-        print_error(error)
+        shared.print_error(error)
         raise
     return groups
 

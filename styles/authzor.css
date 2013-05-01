@@ -86,10 +86,6 @@ body {
     cursor: pointer;
 }
 
-#refresh-button.glowing {
-    background-image: url(../images/refresh_glow.png);
-}
-
 .modal .buttons {
     display: block;
     float: right;
