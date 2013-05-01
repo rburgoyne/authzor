@@ -2,3 +2,5 @@
 authzor.conf
 *.swp
 *.pyc
+.project
+.pydevproject

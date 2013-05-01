@@ -539,7 +539,10 @@
             url: 'cgi-bin/set_rules',
             type: 'PUT',
             contentType: 'application/json',
-            data: JSON.stringify(rules)
+            data: JSON.stringify(rules),
+            complete: function () {
+                init();
+            }
         });
     };
 
