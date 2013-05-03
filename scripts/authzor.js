@@ -272,6 +272,7 @@
         settings.svn_root_dir = $('#svn-root-dir-input').val().replace(/\/$/,
             "");
         settings.authz_file = $('#authz-file-input').val();
+        settings.admin_email = $('#admin-email-input').val();
         settings.ldap_server_url = $('#ldap-server-url-input').val();
         settings.base_dn = $('#base-dn-input').val();
         settings.users_prefix = $('#users-prefix-input').val();
@@ -313,6 +314,7 @@
                         }
                         $('#svn-root-dir-input').val(settings.svn_root_dir);
                         $('#authz-file-input').val(settings.authz_file);
+			$('#admin-email-input').val(settings.admin_email);
                         $('#ldap-server-url-input')
                             .val(settings.ldap_server_url);
                         $('#base-dn-input').val(settings.base_dn);
@@ -1000,7 +1002,7 @@
 
     displayError = function (error) {
         alert(error +
-            ' Please contact GECO HelpDesk (helpdesk@gecoinc.com) ' +
-                'for assistance.');
+            ' Please send a message to ' + settings.admin_email +
+                ' for assistance.');
     };
 }());

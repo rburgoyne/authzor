@@ -4,3 +4,4 @@ authzor.conf
 *.pyc
 .project
 .pydevproject
+favicon.ico
