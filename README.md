@@ -4,7 +4,7 @@ Ryan Burgoyne
 
 GECO, Inc.
 
-Authzor is a web interface for managing user-specific authorization for Subversion repositories. Normally these permissions are managed using a text file named 'authz'. With Authzor, it is easy to manage permissions using a graphical interface. Authzor also imports users and groups from LDAP so that you don't have to manually define them..
+Authzor is a web interface for managing user-specific authorization for Subversion repositories. Normally these permissions are managed using a text file named 'authz'. With Authzor, it is easy to manage permissions using a graphical interface. Authzor also imports users and groups from LDAP so that you don't have to manually define them.
 
 This utility is useful for anyone who has to manage access to Subversion repositories. It was motivated by a desire for that process to be easier and rely on an existing LDAP database instead of a standalone text file.
 
