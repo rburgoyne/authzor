@@ -6,7 +6,7 @@ This file contains methods that are shared by multiple Authzor scripts.
 
 import json
 
-CONFIG_LOCATION = '../authzor.conf'
+CONFIG_LOCATION = '/etc/authzor.conf'
 
 def read_config():
     """Read configuration file and return a settings object."""
