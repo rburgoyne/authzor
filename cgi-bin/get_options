@@ -1,0 +1,80 @@
+#!/usr/bin/python
+"""
+Print a dictionary containing a list of users and a list of
+groups obtained from LDAP.
+"""
+import ldap
+import json
+import shared
+
+
+def get_name(entry, attribute):
+    """
+    Decipher the complex object returned by python-ldap to
+    return the value of a specific attribute. "entry" is a
+    tuple that contains the users dn and a dictionary of attributes.
+    """
+    attributes = ldap.cidict.cidict(entry[1])  # This is a case-insensitive
+                                               # dictionary
+    try:
+        names = attributes[attribute]
+    except KeyError:
+        shared.print_error('The attribute ' + attribute + ' does not exist.')
+        raise
+    name = names[0]
+    return name
+
+
+def get_names(entries, attribute):
+    """Take the LDAP output and return a list of names."""
+    names = []
+    for entry in entries:
+        names.append(get_name(entry, attribute))
+    return names
+
+
+def main():
+    """
+    Get LDAP configuration from file, then query LDAP for a list of
+    users and a list of groups. Return them as a JSON object.
+    """
+    print "Content-type: application/json\n"
+
+    settings = shared.read_config()
+
+    users = None
+    groups = None
+    svngroups = []
+
+    try:
+        connection = ldap.initialize(str(settings['ldap_server_url']))
+        connection.simple_bind_s()
+        users = connection.search_s(str(settings['users_prefix']) +
+            "," + str(settings['base_dn']), ldap.SCOPE_SUBTREE,
+            str(settings['users_filter']), [str(settings['users_name_attr'])])
+        groups = connection.search_s(str(settings['groups_prefix']) +
+            "," + str(settings['base_dn']),
+            ldap.SCOPE_SUBTREE, str(settings['groups_filter']),
+            [str(settings['groups_name_attr'])])
+        for group in groups:
+            svngroups.append(group)
+    except ldap.LDAPError as err:
+        if type(err.message) == dict and 'desc' in err.message:
+            error = err.message['desc']
+        else:
+            error = str(err)
+        shared.print_error(error)
+        raise
+
+    user_names = get_names(users, settings['users_name_attr'])
+    user_names.sort()
+
+    group_names = get_names(svngroups, settings['groups_name_attr'])
+    group_names.sort()
+
+    options = {'users': user_names, 'groups': group_names, 'error': None}
+    print json.dumps(options)
+
+
+if __name__ == "__main__":
+    main()

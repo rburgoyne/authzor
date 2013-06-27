@@ -1,0 +1,23 @@
+#!/usr/bin/python
+"""Verify that a given path is a valid SVN path"""
+import cgi
+import pysvn
+import json
+
+
+def main():
+    """Obtain path from CGI field and ask SVN if it is valid."""
+    form = cgi.FieldStorage()
+    path = form['path'].value
+
+    client = pysvn.Client()
+
+    print 'Content-type: application/json\n'
+    try:
+        client.ls(path)
+        print json.dumps({'valid': True})
+    except pysvn.ClientError:
+        print json.dumps({'valid': False})
+
+if __name__ == '__main__':
+    main()

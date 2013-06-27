@@ -1,0 +1,26 @@
+#!/usr/bin/python
+"""
+Read configuration object in JSON format from STDIN
+and write it directly to file.
+"""
+import sys
+import shared
+
+def main():
+    """
+    Read configuration object from STDIN
+    and write to file.
+    """    
+    print 'Content-type: application/json\n'
+    try:
+        data = sys.stdin.read()
+        if data != '':
+            config_file = open(shared.CONFIG_LOCATION, 'w')
+            config_file.write(data)
+            config_file.close()
+    except IOError:
+        shared.print_error("Could not open the configuration file.")
+
+
+if __name__ == '__main__':
+    main()

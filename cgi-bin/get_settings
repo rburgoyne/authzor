@@ -1,0 +1,21 @@
+#!/usr/bin/python
+"""
+Read configuration file and write it to STDOUT
+"""
+
+import shared
+
+def main():
+    """Read configuration from file and print as a JSON object."""
+    try:
+        print 'Content-type: application/json\n'
+        config_file = open(shared.CONFIG_LOCATION)
+        data = config_file.read()
+        print data
+        config_file.close()
+    except IOError:
+        shared.print_error("Could not open the configuration file.")
+
+
+if __name__ == '__main__':
+    main()

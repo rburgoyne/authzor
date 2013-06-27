@@ -1,0 +1,7 @@
+*~
+authzor.conf
+*.swp
+*.pyc
+.project
+.pydevproject
+favicon.ico

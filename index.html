@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Authzor</title>
+    <link href="styles/authzor.css" rel="stylesheet" type="text/css">
+    <link href="images/favicon.ico" rel="shortcut icon">
+    <script src="scripts/jquery.js" type="text/javascript"></script>
+    <script src="scripts/jquery.jstree.js" type="text/javascript"></script>
+    <script src="scripts/authzor.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <form class="modal" id="settings-form" method="post" action="index.html">
+        <div class="selections">
+            <div class="edit-multiple-group">
+                <div class="input-group" id="svn-input-group">
+                    <div class="labeled-input">
+                        <label>SVN root directory:</label><input id=
+                        "svn-root-dir-input" name="svn-root-dir">
+                    </div>
+                    <div class="labeled-input">
+                        <label>Authorization file:</label><input id="authz-file-input"
+                        name="authz-file">
+                    </div>
+                    <div class="labeled-input">
+                        <label>Administrator email:</label><input id=
+                        "admin-email-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-multiple-group">
+                <div class="input-group" id="ldap-input-group">
+                    <div class="labeled-input">
+                        <label>LDAP server URL:</label><input id=
+                        "ldap-server-url-input" name="ldap-server-url">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Base DN:</label><input id="base-dn-input" name=
+                        "base-dn">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Users prefix:</label><input id="users-prefix-input"
+                        name="users-prefix">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Users filter:</label><input id="users-filter-input"
+                        name="users-filter">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Users name attribute:</label><input id=
+                        "users-name-attr-input" name="users-name-attr">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Groups prefix:</label><input id="groups-prefix-input"
+                        name="groups-prefix">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Groups filter:</label><input id="groups-filter-input"
+                        name="groups-filter">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Groups name attribute:</label><input id=
+                        "groups-name-attr-input" name="groups-name-attr">
+                    </div>
+
+                    <div class="labeled-input">
+                        <label>Groups member attribute:</label><input id=
+                        "group-member-attr-input" name="group-member-attr">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <input id="settings-cancel-button" type="button" value="Cancel">
+            <input id="settings-ok-button" type="submit" value="OK">
+        </div>
+    </form>
+
+    <form class="modal" id="rule-form" method="post" action="index.html">
+        <div class="selections"> 
+            <div class="edit-multiple-group">
+                <div class="edit-multiple-checkbox-container">
+                    <input id="path-edit-multiple-checkbox" class="edit-multiple-checkbox" type="checkbox">
+                </div>
+                <div class="input-group" id="path-input-group">
+                    <select id="repos-dropdown" name="repos"></select> 
+                    <input id="path-input" name="path" placeholder="Path">
+                    <div id="browse-list"></div>
+                </div>
+            </div>
+
+            <div class="edit-multiple-group">
+                <div class="edit-multiple-checkbox-container">
+                    <input id="name-edit-multiple-checkbox" class="edit-multiple-checkbox" type="checkbox">
+                </div>
+                <div class="input-group" id="name-input-group">
+                    <span class="radio-button-group"><span class=
+                    "labeled-radio-button"><input id="all-radio-button" name=
+                    "user-group" type="radio" value="all"> <label for=
+                    "all-radio-button">All</label></span> <span class=
+                    "labeled-radio-button"><input id="user-radio-button" name=
+                    "user-group" type="radio" value="user"> <label for=
+                    "user-radio-button">User</label></span> <span class=
+                    "labeled-radio-button"><input id="group-radio-button" name=
+                    "user-group" type="radio" value="group"> <label for=
+                    "group-radio-button">Group</label></span></span>
+                    <select disabled="disabled" id="users-groups-dropdown" name=
+                    "users-groups">
+                        </select> <a id="refresh-button" title=
+                        "Refresh users and groups from LDAP"></a>
+                </div>
+            </div>
+            <div class="edit-multiple-group">
+                <div class="edit-multiple-checkbox-container">
+                    <input id="permissions-edit-multiple-checkbox" class="edit-multiple-checkbox" type="checkbox">
+                </div>
+                <div class="input-group" id="permissions-input-group">
+                    <input id="read-checkbox" name="permissions" type="checkbox"
+                    value="read"> <label for="read-checkbox">Read</label>
+                    <input id="write-checkbox" name="permissions" type="checkbox"
+                    value="write"> <label for="write-checkbox">Write</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="path-invalid-message">
+            The selected path does not exist.
+        </div>
+
+        <div class="buttons">
+            <input id="cancel-button" type="button" value="Cancel"> <input id=
+            "ok-button" type="submit" value="OK">
+        </div>
+    </form>
+
+    <div id="button-bar">
+        <span id="title">Authzor</span> <input id="new-button" type="button"
+        value="New"> <input class="selection-only-button" id="edit-button"
+        type="button" value="Edit"> <input class="selection-only-button" id=
+        "copy-button" type="button" value="Copy"> <input class=
+        "selection-only-button" id="delete-button" type="button" value=
+        "Delete"> <label>Arrange by:</label> <span id=
+        "arrange-by-radio-button-group"><label><input checked id=
+        "arrange-by-path-radio-button" name="arrange-by" type="radio" value=
+        "path"> <span>Path</span></label> <label><input id=
+        "arrange-by-name-radio-button" name="arrange-by" type="radio" value=
+        "name"> <span>Name</span></label></span> <input id="settings-button"
+        type="button" value="Settings">
+    </div>
+
+    <div id="rules-section">
+        <table id="rules-table"></table>
+    </div>
+
+    <div id="footer">
+        <input id="save-button" type="button" value="Save"> <input id=
+        "revert-button" type="button" value="Cancel">
+
+        <p>&copy; 2012 GECO, Inc. <a href=
+        "http://www.gecoinc.com">www.gecoinc.com</a>. Some icons courtesy of
+        <a href="http://www.glyphicons.com">glyphicons.com</a>.</p>
+    </div>
+
+    <div id="cover"></div>
+</body>
+</html>
+

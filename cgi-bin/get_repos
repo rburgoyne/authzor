@@ -1,0 +1,30 @@
+#!/usr/bin/python
+"""
+Retrieve SVN root directory location from configuration
+file, then return a list of the repositories it contains
+"""
+import os
+import json
+import shared
+
+
+def main():
+    """
+    Get the path to the SVN root directory from the configuration
+    file, then return a list of subdirectories
+    """
+    print "Content-type: application/json\n"
+
+    settings = shared.read_config()
+
+    try:
+        repo_names = (next(os.walk(settings['svn_root_dir'])))[1]
+        repo_names.sort()
+        print json.dumps(repo_names)
+    except StopIteration:
+        shared.print_error('The specified SVN root directory does not exist.')
+        raise
+
+
+if __name__ == "__main__":
+    main()
